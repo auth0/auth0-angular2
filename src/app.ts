@@ -1,6 +1,6 @@
 import {View, Component, bootstrap, provide, CORE_DIRECTIVES, NgIf} from 'angular2/angular2';
 import {HTTP_PROVIDERS} from 'angular2/http';
-import {AuthHttp, tokenNotExpired, JwtHelper} from 'angular2-jwt/dist/angular2-jwt';
+import {AuthHttp, tokenNotExpired, JwtHelper} from 'angular2-jwt/angular2-jwt';
 import {RouteConfig, ROUTER_DIRECTIVES, APP_BASE_HREF, ROUTER_PROVIDERS, CanActivate} from 'angular2/router';
 
 @Component({
@@ -52,7 +52,7 @@ class PrivateRoute {}
 
 export class AuthApp {
 
-  lock = new Auth0Lock('w4ibtscMzP2Zs3jk6MteHwXZ422gGyQc', 'blogtest.auth0.com');
+  lock = new Auth0Lock(YOUR_CLIENT_ID, YOUR_CLIENT_DOMAIN);
   jwtHelper: JwtHelper = new JwtHelper();
 
   constructor(public authHttp:AuthHttp) {}

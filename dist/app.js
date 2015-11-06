@@ -1,4 +1,4 @@
-System.register(['angular2/angular2', 'angular2/http', 'angular2-jwt/dist/angular2-jwt', 'angular2/router'], function(exports_1) {
+System.register(['angular2/angular2', 'angular2/http', 'angular2-jwt/angular2-jwt', 'angular2/router'], function(exports_1) {
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") return Reflect.decorate(decorators, target, key, desc);
         switch (arguments.length) {
@@ -59,7 +59,7 @@ System.register(['angular2/angular2', 'angular2/http', 'angular2-jwt/dist/angula
             AuthApp = (function () {
                 function AuthApp(authHttp) {
                     this.authHttp = authHttp;
-                    this.lock = new Auth0Lock('w4ibtscMzP2Zs3jk6MteHwXZ422gGyQc', 'blogtest.auth0.com');
+                    this.lock = new Auth0Lock(YOUR_CLIENT_ID, YOUR_CLIENT_DOMAIN);
                     this.jwtHelper = new angular2_jwt_1.JwtHelper();
                 }
                 AuthApp.prototype.login = function () {
@@ -101,10 +101,9 @@ System.register(['angular2/angular2', 'angular2/http', 'angular2-jwt/dist/angula
                         { path: '/public-route', component: PublicRoute, as: 'PublicRoute' },
                         { path: '/private-route', component: PrivateRoute, as: 'PrivateRoute' }
                     ]), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof angular2_jwt_1.AuthHttp !== 'undefined' && angular2_jwt_1.AuthHttp) === 'function' && _a) || Object])
+                    __metadata('design:paramtypes', [angular2_jwt_1.AuthHttp])
                 ], AuthApp);
                 return AuthApp;
-                var _a;
             })();
             exports_1("AuthApp", AuthApp);
             angular2_1.bootstrap(AuthApp, [
