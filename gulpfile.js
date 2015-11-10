@@ -13,7 +13,7 @@ gulp.task('ts2js', function () {
     var typescript = require('gulp-typescript');
     var tsResult = gulp.src(PATHS.src)
         .pipe(typescript({
-            noImplicitAny: true,
+            noImplicitAny: false,
             module: 'system',
             target: 'ES5',
             moduleResolution: 'node',

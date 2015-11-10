@@ -3,6 +3,9 @@ import {HTTP_PROVIDERS} from 'angular2/http';
 import {AuthHttp, tokenNotExpired, JwtHelper} from 'angular2-jwt/angular2-jwt';
 import {RouteConfig, ROUTER_DIRECTIVES, APP_BASE_HREF, ROUTER_PROVIDERS, CanActivate} from 'angular2/router';
 
+// Avoid TS error "cannot find name Auth0Lock"
+declare var Auth0Lock;
+
 @Component({
   selector: 'public-route'
 })
@@ -37,28 +40,26 @@ class PrivateRoute {}
       <router-outlet></router-outlet>
     </div>
     <hr>
-    <button (click)="tokenSubscription()">Show Token from Observable</button>
-    <button (click)="getSecretThing()">Get Secret Thing</button>
-    <button (click)="useJwtHelper()">Use Jwt Helper</button>
-
-
+    <button *ng-if="loggedIn()" (click)="tokenSubscription()">Show Token from Observable</button>
+    <button *ng-if="loggedIn()" (click)="getSecretThing()">Get Secret Thing</button>
+    <button *ng-if="loggedIn()" (click)="useJwtHelper()">Use Jwt Helper</button>
   `
 })
 
 @RouteConfig([
-  { path: '/public-route', component: PublicRoute, as: 'PublicRoute' }
+  { path: '/public-route', component: PublicRoute, as: 'PublicRoute' },
   { path: '/private-route', component: PrivateRoute, as: 'PrivateRoute' }
 ])
 
 export class AuthApp {
 
-  lock = new Auth0Lock(YOUR_CLIENT_ID, YOUR_CLIENT_DOMAIN);
+  lock = new Auth0Lock('YOUR_CLIENT_ID', 'YOUR_CLIENT_DOMAIN');
   jwtHelper: JwtHelper = new JwtHelper();
 
   constructor(public authHttp:AuthHttp) {}
 
   login() {
-    this.lock.show(function(err, profile, id_token) {
+    this.lock.show(function(err:string, profile:string, id_token:string) {
 
       if(err) {
         throw new Error(err);
@@ -80,14 +81,13 @@ export class AuthApp {
   }
 
   getSecretThing() {
-    this.authHttp.get('http://localhost:3001/secured/ping')
-      .map(res => res.json())
+    this.authHttp.get('http://example.com/api/secretthing')
+      .map(res => res.text())
       .subscribe(
         data => console.log(data),
         err => console.log(err),
         () => console.log('Complete')
       );
-    );
   }
 
   tokenSubscription() {

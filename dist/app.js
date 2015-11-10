@@ -59,7 +59,7 @@ System.register(['angular2/angular2', 'angular2/http', 'angular2-jwt/angular2-jw
             AuthApp = (function () {
                 function AuthApp(authHttp) {
                     this.authHttp = authHttp;
-                    this.lock = new Auth0Lock(YOUR_CLIENT_ID, YOUR_CLIENT_DOMAIN);
+                    this.lock = new Auth0Lock('w4ibtscMzP2Zs3jk6MteHwXZ422gGyQc', 'blogtest.auth0.com');
                     this.jwtHelper = new angular2_jwt_1.JwtHelper();
                 }
                 AuthApp.prototype.login = function () {
@@ -79,10 +79,9 @@ System.register(['angular2/angular2', 'angular2/http', 'angular2-jwt/angular2-jw
                     return angular2_jwt_1.tokenNotExpired();
                 };
                 AuthApp.prototype.getSecretThing = function () {
-                    this.authHttp.get('http://localhost:3001/secured/ping')
-                        .map(function (res) { return res.json(); })
+                    this.authHttp.get('http://example.com/api/secretthing')
+                        .map(function (res) { return res.text(); })
                         .subscribe(function (data) { return console.log(data); }, function (err) { return console.log(err); }, function () { return console.log('Complete'); });
-                    ;
                 };
                 AuthApp.prototype.tokenSubscription = function () {
                     this.authHttp.tokenStream.subscribe(function (data) { return console.log(data); }, function (err) { return console.log(err); }, function () { return console.log('Complete'); });
@@ -95,7 +94,7 @@ System.register(['angular2/angular2', 'angular2/http', 'angular2-jwt/angular2-jw
                     angular2_1.Component({
                         directives: [angular2_1.CORE_DIRECTIVES, router_1.ROUTER_DIRECTIVES, angular2_1.NgIf],
                         selector: 'app',
-                        template: "\n    <h1>Welcome to Angular2 with Auth0</h1>\n    <button *ng-if=\"!loggedIn()\" (click)=\"login()\">Login</button>\n    <button *ng-if=\"loggedIn()\" (click)=\"logout()\">Logout</button>\n    <hr>\n    <div>\n      <button [router-link]=\"['./PublicRoute']\">Public Route</button>\n      <button *ng-if=\"loggedIn()\" [router-link]=\"['./PrivateRoute']\">Private Route</button>\n      <router-outlet></router-outlet>\n    </div>\n    <hr>\n    <button (click)=\"tokenSubscription()\">Show Token from Observable</button>\n    <button (click)=\"getSecretThing()\">Get Secret Thing</button>\n    <button (click)=\"useJwtHelper()\">Use Jwt Helper</button>\n\n\n  "
+                        template: "\n    <h1>Welcome to Angular2 with Auth0</h1>\n    <button *ng-if=\"!loggedIn()\" (click)=\"login()\">Login</button>\n    <button *ng-if=\"loggedIn()\" (click)=\"logout()\">Logout</button>\n    <hr>\n    <div>\n      <button [router-link]=\"['./PublicRoute']\">Public Route</button>\n      <button *ng-if=\"loggedIn()\" [router-link]=\"['./PrivateRoute']\">Private Route</button>\n      <router-outlet></router-outlet>\n    </div>\n    <hr>\n    <button *ng-if=\"loggedIn()\" (click)=\"tokenSubscription()\">Show Token from Observable</button>\n    <button *ng-if=\"loggedIn()\" (click)=\"getSecretThing()\">Get Secret Thing</button>\n    <button *ng-if=\"loggedIn()\" (click)=\"useJwtHelper()\">Use Jwt Helper</button>\n  "
                     }),
                     router_1.RouteConfig([
                         { path: '/public-route', component: PublicRoute, as: 'PublicRoute' },

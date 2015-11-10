@@ -11,8 +11,6 @@ npm install
 
 ## Start the App
 
-After completing installation type in your favourite shell:
-
 ```bash
 gulp play
 ```
@@ -21,14 +19,29 @@ The app will be served at `localhost:9000`.
 
 ## Key Parts
 
-### Import the Required **Angular 2** and **angular2-jwt** Classes.
+### Map to angular2-jwt
+
+```html
+  <!-- index.html -->
+  <script>
+    //configure system loader
+    System.config({
+      defaultJSExtensions: true,
+      map: {
+        "angular2-jwt": "node_modules/angular2-jwt"
+      }
+    });
+  </script>
+```
+
+### Import the Required **Angular 2** and **angular2-jwt** Classes
 
 ```js
 // app.ts
 
 import {View, Component, bootstrap, provide, CORE_DIRECTIVES, NgIf} from 'angular2/angular2';
 import {HTTP_PROVIDERS} from 'angular2/http';
-import {AuthHttp, Auth0Service, tokenNotExpired} from 'angular2-jwt/dist/angular2-jwt';
+import {AuthHttp, tokenNotExpired, JwtHelper} from 'angular2-jwt/angular2-jwt';
 ```
 
 ### Include Auth0's Lock
