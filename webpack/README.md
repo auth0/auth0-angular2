@@ -1,4 +1,4 @@
-# Auth0 + Angular 2 with angular2-jwt
+# Auth0 + Angular 2 with angular2-jwt and Webpack
 
 This is an example app that shows how to use Auth0 with Angular 2. It uses Auth0's [angular2-jwt](https://github.com/auth0/angular2-jwt) module. The example app is based off of [angular2-webpack-starter](https://github.com/AngularClass/angular2-webpack-starter) by [gdi2290](https://github.com/gdi2290).
 
