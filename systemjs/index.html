@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Auth0 - Angular 2 With SystemJS</title>
+
+    <!-- Auth0 Lock script and AngularJS module -->
+    <script src="//cdn.auth0.com/js/lock-7.12.min.js"></script>
+</head>
+
+<body>
+    <app>Loading...</app>
+</body>
+
+<!-- ES6-related imports -->
+<script src="/node_modules/angular2/bundles/angular2-polyfills.js"></script>
+<script src="/node_modules/es6-shim/es6-shim.min.js"></script>
+<script src="/node_modules/systemjs/dist/system.js"></script>
+<script>
+    //configure system loader
+    System.config({
+      defaultJSExtensions: true,
+      packages: {
+        "/angular2-jwt": {
+          "defaultExtension": "js"
+        }
+      },
+      map: {
+        "angular2-jwt": "node_modules/angular2-jwt/angular2-jwt"
+      }
+    });
+</script>
+<script src="/node_modules/rxjs/bundles/Rx.js"></script>
+<script src="/node_modules/angular2/bundles/angular2.min.js"></script>
+<script src="/node_modules/angular2/bundles/http.min.js"></script>
+<script src="/node_modules/angular2/bundles/router.min.js"></script>
+<script src="/node_modules/angular2-jwt/angular2-jwt.js"></script>
+<script>
+    //bootstrap the Angular2 application
+    System.import('dist/app').catch(console.log.bind(console));
+</script>
+
+</html>

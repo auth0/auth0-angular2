@@ -1,9 +1,9 @@
-import {View, Component, bootstrap, provide, CORE_DIRECTIVES, NgIf} from 'angular2/angular2';
-import {HTTP_PROVIDERS} from 'angular2/http';
-import {AuthHttp, tokenNotExpired, JwtHelper} from 'angular2-jwt/angular2-jwt';
-import {RouteConfig, ROUTER_DIRECTIVES, APP_BASE_HREF, ROUTER_PROVIDERS, CanActivate} from 'angular2/router';
+import {Component, View} from 'angular2/core';
+import {RouteConfig, Router, ROUTER_DIRECTIVES, CanActivate} from 'angular2/router';
+import {Http} from 'angular2/http';
+import {FORM_PROVIDERS} from 'angular2/common';
+import {AuthHttp, tokenNotExpired, JwtHelper} from 'angular2-jwt';
 
-// Avoid TS error "cannot find name Auth0Lock"
 declare var Auth0Lock;
 
 @Component({
@@ -27,22 +27,23 @@ class PublicRoute {}
 class PrivateRoute {}
 
 @Component({
-  directives: [ CORE_DIRECTIVES, ROUTER_DIRECTIVES, NgIf ],
   selector: 'app',
+  directives: [ ROUTER_DIRECTIVES ],
   template: `
     <h1>Welcome to Angular2 with Auth0</h1>
-    <button *ng-if="!loggedIn()" (click)="login()">Login</button>
-    <button *ng-if="loggedIn()" (click)="logout()">Logout</button>
+    <button *ngIf="!loggedIn()" (click)="login()">Login</button>
+    <button *ngIf="loggedIn()" (click)="logout()">Logout</button>
     <hr>
     <div>
-      <button [router-link]="['./PublicRoute']">Public Route</button>
-      <button *ng-if="loggedIn()" [router-link]="['./PrivateRoute']">Private Route</button>
+      <button [routerLink]="['./PublicRoute']">Public Route</button>
+      <button *ngIf="loggedIn()" [routerLink]="['./PrivateRoute']">Private Route</button>
       <router-outlet></router-outlet>
     </div>
     <hr>
-    <button *ng-if="loggedIn()" (click)="tokenSubscription()">Show Token from Observable</button>
-    <button *ng-if="loggedIn()" (click)="getSecretThing()">Get Secret Thing</button>
-    <button *ng-if="loggedIn()" (click)="useJwtHelper()">Use Jwt Helper</button>
+    <button (click)="getThing()">Get Thing</button>
+    <button *ngIf="loggedIn()" (click)="tokenSubscription()">Show Token from Observable</button>
+    <button (click)="getSecretThing()">Get Secret Thing</button>
+    <button *ngIf="loggedIn()" (click)="useJwtHelper()">Use Jwt Helper</button>
   `
 })
 
@@ -51,17 +52,17 @@ class PrivateRoute {}
   { path: '/private-route', component: PrivateRoute, as: 'PrivateRoute' }
 ])
 
-export class AuthApp {
+export class App {
 
   lock = new Auth0Lock('YOUR_CLIENT_ID', 'YOUR_CLIENT_DOMAIN');
   jwtHelper: JwtHelper = new JwtHelper();
 
-  constructor(public authHttp:AuthHttp) {}
+  constructor(public http: Http, public authHttp: AuthHttp) {}
 
   login() {
-    this.lock.show(function(err:string, profile:string, id_token:string) {
+    this.lock.show((err: string, profile: string, id_token: string) => {
 
-      if(err) {
+      if (err) {
         throw new Error(err);
       }
 
@@ -80,11 +81,19 @@ export class AuthApp {
     return tokenNotExpired();
   }
 
-  getSecretThing() {
-    this.authHttp.get('http://example.com/api/secretthing')
-      .map(res => res.text())
+  getThing() {
+    this.http.get('http://localhost:3001/ping')
       .subscribe(
-        data => console.log(data),
+        data => console.log(data.json()),
+        err => console.log(err),
+        () => console.log('Complete')
+      );
+  }
+
+  getSecretThing() {
+    this.authHttp.get('http://localhost:3001/secured/ping')
+      .subscribe(
+        data => console.log(data.json()),
         err => console.log(err),
         () => console.log('Complete')
       );
@@ -108,12 +117,3 @@ export class AuthApp {
     );
   }
 }
-
-bootstrap(AuthApp, [
-  HTTP_PROVIDERS,
-  ROUTER_PROVIDERS, 
-  provide(AuthHttp, { useFactory: () => {
-    return new AuthHttp();
-  }}),
-  provide(APP_BASE_HREF, {useValue:'/'})
-])
