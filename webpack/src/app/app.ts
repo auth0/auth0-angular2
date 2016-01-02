@@ -7,24 +7,21 @@ import {AuthHttp, tokenNotExpired, JwtHelper} from 'angular2-jwt';
 declare var Auth0Lock;
 
 @Component({
-  selector: 'public-route'
-})
-@View({
+  selector: 'public-route',
   template: `<h1>Hello from a public route</h1>`
 })
-class PublicRoute {}
+class PublicRoute {
+
+}
 
 @Component({
-  selector: 'private-route'
-})
-
-@View({
+  selector: 'private-route',
   template: `<h1>Hello from private route</h1>`
 })
-
 @CanActivate(() => tokenNotExpired())
+class PrivateRoute {
 
-class PrivateRoute {}
+}
 
 @Component({
   selector: 'app',
@@ -46,12 +43,10 @@ class PrivateRoute {}
     <button *ngIf="loggedIn()" (click)="useJwtHelper()">Use Jwt Helper</button>
   `
 })
-
 @RouteConfig([
   { path: '/public-route', component: PublicRoute, as: 'PublicRoute' },
   { path: '/private-route', component: PrivateRoute, as: 'PrivateRoute' }
 ])
-
 export class App {
 
   lock = new Auth0Lock('YOUR_CLIENT_ID', 'YOUR_CLIENT_DOMAIN');
