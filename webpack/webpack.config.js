@@ -64,7 +64,9 @@ module.exports = {
       { test: /\.html$/,  loader: 'raw-loader' },
     ],
     noParse: [
-     /zone\.js\/dist\/zone-microtask/
+     /zone\.js\/dist\/.+/,
+     /reflect-metadata/,
+     /es(6|7)-.+/,
     ]
   },
 
