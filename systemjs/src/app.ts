@@ -2,7 +2,7 @@ import {bootstrap} from 'angular2/platform/browser';
 import {Component, View, provide} from 'angular2/core';
 import {RouteConfig, Router, APP_BASE_HREF, ROUTER_PROVIDERS, ROUTER_DIRECTIVES, CanActivate} from 'angular2/router';
 import {HTTP_PROVIDERS, Http} from 'angular2/http';
-import {AuthHttp, tokenNotExpired, JwtHelper} from 'angular2-jwt';
+import {AuthHttp, AuthConfig, tokenNotExpired, JwtHelper} from 'angular2-jwt';
 
 declare var Auth0Lock;
 
@@ -122,8 +122,9 @@ export class App {
 bootstrap(App, [
   HTTP_PROVIDERS,
   ROUTER_PROVIDERS,
-  provide(AuthHttp, { useFactory: () => {
-    return new AuthHttp();
+  provide(AuthConfig, { useFactory: () => {
+    return new AuthConfig();
   }}),
+  AuthHttp,
   provide(APP_BASE_HREF, {useValue:'/'})
 ]);
