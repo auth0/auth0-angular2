@@ -117,9 +117,12 @@ Bootstrap the application in `src/bootstrap.ts`.
 
 bootstrap(App, [
   HTTP_PROVIDERS,
-  provide(AuthHttp, { useFactory: () => {
-    return new AuthHttp();
-  }})
+  provide(AuthHttp, {
+    useFactory: (http) => {
+      return new AuthHttp(new AuthConfig(), http);
+    },
+    deps: [Http]
+  })
 ]);
 
 ...
