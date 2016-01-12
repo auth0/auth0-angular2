@@ -60,16 +60,20 @@ export class App {
   constructor(public http: Http, public authHttp: AuthHttp) {}
 
   login() {
-    this.lock.show((err: string, profile: string, id_token: string) => {
-
-      if (err) {
-        throw new Error(err);
-      }
-
-      localStorage.setItem('profile', JSON.stringify(profile));
-      localStorage.setItem('id_token', id_token);
-
-    });
+    var hash = this.lock.parseHash();
+    if (hash) {
+      if (hash.error)
+        console.log('There was an error logging in', hash.error);
+      else
+        this.lock.getProfile(hash.id_token, function(err, profile) {
+          if (err) {
+            console.log(err);
+            return;
+          }
+          localStorage.setItem('profile', JSON.stringify(profile));
+          localStorage.setItem('id_token', hash.id_token);
+        });
+    }
   }
 
   logout() {
