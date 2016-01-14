@@ -48,23 +48,28 @@ class PrivateRoute {
   { path: '/private-route', component: PrivateRoute, as: 'PrivateRoute' }
 ])
 export class App {
-
   lock = new Auth0Lock('YOUR_CLIENT_ID', 'YOUR_CLIENT_DOMAIN');
   jwtHelper: JwtHelper = new JwtHelper();
 
   constructor(public http: Http, public authHttp: AuthHttp) {}
 
   login() {
-    this.lock.show((err: string, profile: string, id_token: string) => {
+    var hash = this.lock.parseHash();
+    if (hash) {
+      if (hash.error)
+        console.log('There was an error logging in', hash.error);
+      else
+        this.lock.getProfile(hash.id_token, function(err, profile) {
+          if (err) {
+            console.log(err);
+            return;
+          }
+          localStorage.setItem('profile', JSON.stringify(profile));
+          localStorage.setItem('id_token', hash.id_token);
+        });
+    }
 
-      if (err) {
-        throw new Error(err);
-      }
-
-      localStorage.setItem('profile', JSON.stringify(profile));
-      localStorage.setItem('id_token', id_token);
-
-    });
+    this.lock.show();
   }
 
   logout() {
