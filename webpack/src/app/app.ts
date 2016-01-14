@@ -48,10 +48,10 @@ class PrivateRoute {
   { path: '/private-route', component: PrivateRoute, as: 'PrivateRoute' }
 ])
 export class App {
-  lock = new Auth0Lock('frpoLFCvzss4uHw3XJs96YdnscaXPkuo', 'tutorials.auth0.com');
+  lock = new Auth0Lock('YOUR_CLIENT_ID', 'YOUR_CLIENT_DOMAIN');
   jwtHelper: JwtHelper = new JwtHelper();
 
-  constructor(public http: Http, public authHttp: AuthHttp) { console.log('connect');}
+  constructor(public http: Http, public authHttp: AuthHttp) {}
 
   login() {
     var hash = this.lock.parseHash();
