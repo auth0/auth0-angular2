@@ -4,7 +4,7 @@
 import {bootstrap} from 'angular2/platform/browser';
 import {provide} from 'angular2/core';
 import {ELEMENT_PROBE_PROVIDERS} from 'angular2/platform/common_dom';
-import {ROUTER_PROVIDERS} from 'angular2/router';
+import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy} from 'angular2/router';
 import {HTTP_PROVIDERS, Http} from 'angular2/http';
 import {AuthHttp, AuthConfig} from 'angular2-jwt';
 
@@ -29,7 +29,8 @@ export function main() {
         return new AuthHttp(new AuthConfig(), http);
       },
       deps: [Http]
-    })
+    }),
+    provide(LocationStrategy, { useClass: HashLocationStrategy })
   ])
   .catch(err => console.error(err));
 }

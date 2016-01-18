@@ -10,20 +10,20 @@
 */
 Error.stackTraceLimit = Infinity;
 require('phantomjs-polyfill');
-require('es6-shim');
 require('es6-promise');
-require('reflect-metadata');
-require('zone.js/dist/zone-microtask.js');
-require('zone.js/dist/long-stack-trace-zone.js');
+require('es6-shim');
+require('es7-reflect-metadata/dist/browser');
+
+require('zone.js/lib/browser/zone-microtask.js');
+require('zone.js/lib/browser/long-stack-trace-zone.js');
 require('zone.js/dist/jasmine-patch.js');
-require('angular2/testing');
 
 /*
   Ok, this is kinda crazy. We can use the the context method on
   require that webpack created in order to tell webpack
   what files we actually want to require or import.
   Below, context will be an function/object with file names as keys.
-  using that regex we are saying look in client/app and find
+  using that regex we are saying look in ./src/app and ./test then find
   any file that ends with spec.js and get its path. By passing in true
   we say do this recursively
 */
@@ -40,3 +40,4 @@ testContext.keys().forEach(testContext);
 // see https://github.com/AngularClass/angular2-webpack-starter/issues/124
 var domAdapter = require('angular2/src/platform/browser/browser_adapter');
 domAdapter.BrowserDomAdapter.makeCurrent();
+

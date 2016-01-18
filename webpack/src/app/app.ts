@@ -49,7 +49,7 @@ class PrivateRoute {
 ])
 export class App {
 
-  lock = new Auth0Lock('YOUR_CLIENT_ID', 'YOUR_CLIENT_DOMAIN');
+  lock = new Auth0Lock('AUTH0_CLIENT_ID', 'AUTH0_DOMAIN');
   jwtHelper: JwtHelper = new JwtHelper();
 
   constructor(public http: Http, public authHttp: AuthHttp) {}
