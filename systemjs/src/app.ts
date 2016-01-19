@@ -54,7 +54,7 @@ class PrivateRoute {}
 
 export class App {
 
-  lock = new Auth0Lock('YOUR_CLIENT_ID', 'YOUR_CLIENT_DOMAIN');
+  lock = new Auth0Lock('w4ibtscMzP2Zs3jk6MteHwXZ422gGyQc', 'blogtest.auth0.com');
   jwtHelper: JwtHelper = new JwtHelper();
 
   constructor(public http: Http, public authHttp: AuthHttp) {}
