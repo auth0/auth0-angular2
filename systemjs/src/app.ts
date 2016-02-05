@@ -122,9 +122,11 @@ export class App {
 bootstrap(App, [
   HTTP_PROVIDERS,
   ROUTER_PROVIDERS,
-  provide(AuthConfig, { useFactory: () => {
-    return new AuthConfig();
-  }}),
-  AuthHttp,
+  provide(AuthHttp, { 
+    useFactory: (http) => {
+      return new AuthHttp(new AuthConfig(), http);
+    },
+    deps: [Http]
+  }),
   provide(APP_BASE_HREF, {useValue:'/'})
 ]);
