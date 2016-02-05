@@ -196,12 +196,15 @@ export class AuthApp {
 
 bootstrap(AuthApp, [
   HTTP_PROVIDERS,
-  ROUTER_PROVIDERS, 
-  provide(AuthHttp, { useFactory: () => {
-    return new AuthHttp();
-  }}),
+  ROUTER_PROVIDERS,
+  provide(AuthHttp, { 
+    useFactory: (http) => {
+      return new AuthHttp(new AuthConfig(), http);
+    },
+    deps: [Http]
+  }),
   provide(APP_BASE_HREF, {useValue:'/'})
-])
+]);
 ```
 
 ### Use the JWT as an Observable
