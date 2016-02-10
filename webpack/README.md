@@ -38,7 +38,7 @@ import {AuthHttp, tokenNotExpired, JwtHelper} from 'angular2-jwt';
   <!-- src/public/index.html -->
 
   <!-- Auth0 Lock script and AngularJS module -->
-  <script src="//cdn.auth0.com/js/lock-7.12.min.js"></script>
+  <script src="//cdn.auth0.com/js/lock-8.2.min.js"></script>
 ```
 
 ### Set up a Basic Application Component
