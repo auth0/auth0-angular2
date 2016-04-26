@@ -1,11 +1,17 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <base href="/">
     <meta charset="UTF-8">
-    <title>Auth0 - Angular 2 With SystemJS</title>
+    <title>Angular2 playground</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    
+    <!-- Auth0 Lock script -->
+    <script src="//cdn.auth0.com/js/lock-9.0.min.js"></script>
 
-    <!-- Auth0 Lock script and AngularJS module -->
-    <script src="//cdn.auth0.com/js/lock-9.0.js"></script>
+    <!-- Setting the right viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 </head>
 
 <body>
@@ -19,24 +25,28 @@
 <script>
     //configure system loader
     System.config({
-      defaultJSExtensions: true,
-      packages: {
-        "/angular2-jwt": {
-          "defaultExtension": "js"
+        defaultJSExtensions: true,
+        packages: {
+          app: {
+            format: 'register',
+            defaultExtension: 'js'
+          },
+          "angular2-jwt": {
+            defaultExtension: 'js'
+          }          
+        },
+        map: {
+          "angular2-jwt": "node_modules/angular2-jwt/angular2-jwt.js"
         }
-      },
-      map: {
-        "angular2-jwt": "node_modules/angular2-jwt/angular2-jwt"
-      }
-    });
+      });
 </script>
 <script src="/node_modules/rxjs/bundles/Rx.js"></script>
 <script src="/node_modules/angular2/bundles/angular2.js"></script>
-<script src="/node_modules/angular2/bundles/http.js"></script>
 <script src="/node_modules/angular2/bundles/router.js"></script>
+<script src="/node_modules/angular2/bundles/http.js"></script>
 <script>
     //bootstrap the Angular2 application
-    System.import('dist/app').catch(console.log.bind(console));
+    System.import('dist/app.component').catch(console.log.bind(console));
 </script>
 
 </html>

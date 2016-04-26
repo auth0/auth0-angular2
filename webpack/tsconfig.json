@@ -1,25 +1,29 @@
 {
   "compilerOptions": {
-    "target": "ES5",
+    "target": "es5",
     "module": "commonjs",
-    "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "noEmitHelpers": true
   },
-  "files": [
+  "exclude": [
+    "node_modules",
     "typings/main.d.ts",
-    "test/injector.spec.ts",
-    "test/sanity-test.spec.ts",
-    "src/app/app.spec.ts",
-    "src/app/app.ts",
-    "src/app/directives/x-large.ts",
-    "src/app/directives/x-large.spec.ts",
-    "src/app/providers/title.spec.ts",
-    "src/app/providers/title.ts",
-    "src/app/home/home.ts",
-    "src/bootstrap.ts",
-    "src/vendor.ts"
+    "typings/main"
   ],
-  "compileOnSave": false
+  "filesGlob": [
+    "./src/**/*.ts",
+    "./test/**/*.ts",
+    "!./node_modules/**/*.ts",
+    "src/custom-typings.d.ts",
+    "typings/browser.d.ts"
+  ],
+  "awesomeTypescriptLoaderOptions": {
+    "resolveGlobs": true,
+    "forkChecker": true
+  },
+  "compileOnSave": false,
+  "buildOnSave": false,
+  "atom": { "rewriteTsconfig": false }
 }

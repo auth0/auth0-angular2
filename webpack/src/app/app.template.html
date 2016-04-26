@@ -1,0 +1,16 @@
+<header>
+  <md-toolbar color="primary">
+    <h3>Auth0 - Angular 2</h3>
+    <nav>      
+      <button md-button [routerLink]=" ['Home'] ">Home</button>
+      <button md-button [routerLink]=" ['Ping'] ">Ping</button>
+      <button md-button [routerLink]=" ['Profile'] " *ngIf="auth.authenticated()">Profile</button>
+      <button md-button (click)="auth.login()" *ngIf="!auth.authenticated()">Log In</button>
+      <button md-button (click)="auth.logout()" *ngIf="auth.authenticated()">Log Out</button>
+    </nav>
+  </md-toolbar>
+</header>
+
+<main>
+  <router-outlet></router-outlet>
+</main>

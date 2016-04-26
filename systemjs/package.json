@@ -1,14 +1,15 @@
 {
   "name": "auth0-angular2",
   "version": "0.0.0",
-  "description": "Example of using angular2-jwt with Auth0 and SystemJS",
+  "description": "Example showing Angular 2 with Auth0 using ng2-play",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/auth0/auth0-angular2.git"
   },
   "bugs": {
-    "url": "https://github.com/auth0/auth0-angular2/issues"
+    "url": "https://github.com/auth0/auth0-angular2.git/issues"
   },
+  "homepage": "https://github.com/auth0/auth0-angular2.git#readme",
   "devDependencies": {
     "connect": "^3.4.0",
     "del": "^1.2.0",
@@ -18,13 +19,12 @@
     "serve-static": "^1.10.0"
   },
   "dependencies": {
-    "angular2": "2.0.0-beta.9",
-    "es6-promise": "^3.0.2",
-    "es6-shim": "^0.33.3",
+    "angular2": "2.0.0-beta.16",
+    "angular2-jwt": "^0.1.12",
+    "es6-shim": "0.35.0",
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.2",
-    "zone.js": "0.5.15",
-    "systemjs": "0.19.6",
-    "angular2-jwt": "0.1.6"
+    "zone.js": "0.6.12",
+    "systemjs": "0.19.6"
   }
 }

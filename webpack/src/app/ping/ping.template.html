@@ -1,0 +1,9 @@
+<md-card>
+  <md-card-content>
+    <h1>Send a Ping to the Server</h1>
+    <p *ngIf="!auth.authenticated()">Log In to Get Access to a Secured Ping</p>
+    <button md-raised-button color="primary" (click)="ping()">Ping</button>
+    <button md-raised-button color="primary" (click)="securedPing()" *ngIf="auth.authenticated()">Secured Ping</button>
+    <h2>{{message}}</h2>
+  </md-card-content>
+</md-card>
