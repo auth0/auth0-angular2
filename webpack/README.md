@@ -10,6 +10,10 @@ Clone the repo, then:
 npm install
 ```
 
+## Add Your Auth0 Credentials
+
+If you haven't already done so, [sign up](https://auth0.com/signup) for your free Auth0 account. Once you have the client ID and client domain for your app, replace the argumentts in `Auth0Lock` within `auth.service.ts` with them.
+
 ## Start the App
 
 ```bash
@@ -20,220 +24,53 @@ The app will be served at `localhost:3000`.
 
 ## Key Parts
 
-### Import the Required **Angular 2** and **angular2-jwt** Classes
+### Create an Injectable Auth Service
+
+The best way to have authentication utilities available across the application is to use an `Injectable` service. This is provided in `auth.service.ts` and is the spot where Auth0Lock is set up.
 
 ```ts
-// src/app/app.ts
+// app/auth/auth.service.ts
+import {Injectable, NgZone} from 'angular2/core';
+import {Router} from 'angular2/router';
+import {AuthHttp, tokenNotExpired} from 'angular2-jwt';
 
-import {Component, View} from 'angular2/core';
-import {RouteConfig, Router, ROUTER_DIRECTIVES, CanActivate} from 'angular2/router';
-import {Http} from 'angular2/http';
-import {FORM_PROVIDERS} from 'angular2/common';
-import {AuthHttp, tokenNotExpired, JwtHelper} from 'angular2-jwt';
+// Avoid name not found warnings
+declare var Auth0Lock: any;
+
+@Injectable()
+export class Auth {
+  lock = new Auth0Lock('YOUR_AUTH0_CLIENT_ID', 'YOUR_AUTH0_DOMAIN');
+  refreshSubscription: any;
+  user: Object;
+  zoneImpl: NgZone;
+
+...
 ```
 
-### Include Auth0's Lock
+### Make Calls to a Secure API
 
-```html
-  <!-- src/public/index.html -->
-
-  <!-- Auth0 Lock script and AngularJS module -->
-  <script src="//cdn.auth0.com/js/lock-9.0.js"></script>
-```
-
-### Set up a Basic Application Component
+The `AuthHttp` class is used to automatically attach the user's JWT as an `Authorization` header when making requests. Making secure HTTP calls looks the same as it would with regular `Http`.
 
 ```ts
-// src/app/app.ts
-
-@Component({
-  directives: [ ROUTER_DIRECTIVES ],
-  selector: 'app',
-  template: `
-    <h1>Welcome to Angular2 with Auth0</h1>
-    <button *ng-if="!loggedIn()" (click)="login()">Login</button>
-    <button *ng-if="loggedIn()" (click)="logout()">Logout</button>
-  `
-})
-
-export class AuthApp {
-
-  lock: Auth0Lock = new Auth0Lock(YOUR_CLIENT_ID, YOUR_CLIENT_DOMAIN);
-
-  constructor() {}
-
-  login() {
-    this.lock.show(function(err, profile, id_token) {
-
-      if(err) {
-        throw new Error(err);
-      }
-
-      localStorage.setItem('profile', JSON.stringify(profile));
-      localStorage.setItem('id_token', id_token);
-
-    });
-  }
-
-  logout() {
-    localStorage.removeItem('profile');
-    localStorage.removeItem('id_token');
-  }
-
-  loggedIn() {
-    return tokenNotExpired();
-  }
-
-}
-```
-
-### Make Authenticated Requests with AuthHttp
-
-The `AuthHttp` class is used to make authenticated HTTP requests. The class uses Angular 2's **Http** module but includes the `Authorization` header for you.
-
-```ts
-// src/app/app.ts
+// ping.component.ts
 
 ...
 
-constructor(public authHttp: AuthHttp) {}
-
-getSecretThing() {
-  this.authHttp.get('http://localhost:3001/secured/ping')
+securedPing() {
+  this.authHttp.get(`${this.API_URL}/secured/ping`)
+    .map(res => res.json())
     .subscribe(
-      data => console.log(data.json()),
-      err => console.log(err),
-      () => console.log('Complete')
+      data => this.message= data.text,
+      error => this.message = error._body
     );
 }
-```
-
-Bootstrap the application in `src/bootstrap.ts`.
-
-```ts
-// src/app/app.ts
-
-...
-
-bootstrap(App, [
-  HTTP_PROVIDERS,
-  provide(AuthHttp, {
-    useFactory: (http) => {
-      return new AuthHttp(new AuthConfig(), http);
-    },
-    deps: [Http]
-  })
-]);
 
 ...
 ```
 
-### Protect Private Routes by Checking Token Expiry
+### Where is the Server?
 
-Although data from the API will be protected and require a valid JWT to access, users that aren't authenticated will be able to get to any route by default. We can use the `@CanActivate` life-cycle hook from Angular 2's router to limit navigation on certain routes to only those with a non-expired JWT.
-
-```ts
-// src/app/app.ts
-
-import {RouteConfig, Router, ROUTER_DIRECTIVES, CanActivate} from 'angular2/router';
-
-@Component({
-  selector: 'public-route'
-})
-@View({
-  template: `<h1>Hello from a public route</h1>`
-})
-class PublicRoute {}
-
-@Component({
-  selector: 'private-route'
-})
-
-@View({
-  template: `<h1>Hello from private route</h1>`
-})
-
-@CanActivate(() => tokenNotExpired())
-
-class PrivateRoute {}
-
-@Component({
-  directives: [ ROUTER_DIRECTIVES ],
-  selector: 'app',
-  template: `
-    <h1>Welcome to Angular2 with Auth0</h1>
-    <button *ng-if="!loggedIn()" (click)="login()">Login</button>
-    <button *ng-if="loggedIn()" (click)="logout()">Logout</button>
-    <hr>
-    <div>
-      <button [routerLink]="['./PublicRoute']">Public Route</button>
-      <button *ng-if="loggedIn()" [routerLink]="['./PrivateRoute']">Private Route</button>
-      <router-outlet></router-outlet>
-    </div>
-
-  `
-})
-
-@RouteConfig([
-  { path: '/public-route', component: PublicRoute, as: 'PublicRoute' }
-  { path: '/private-route', component: PrivateRoute, as: 'PrivateRoute' }
-])
-
-...
-
-
-```
-
-### Use the JWT as an Observable
-
-If you wish to use the JWT as an observable stream, you can call `tokenStream` from `AuthHttp`.
-
-```ts
-// src/app/app.ts
-
-tokenSubscription() {
-  this.authHttp.tokenStream.subscribe(
-      data => console.log(data),
-      err => console.log(err),
-      () => console.log('Complete')
-    );
-}
-```
-
-This can be useful for cases where you want to make HTTP requests out of obsevable streams. The `tokenStream` can be mapped and combined with other streams at will.
-```
-
-### Using JwtHelper in Components
-
-The `JwtHelper` class has several useful methods that can be utilized in your components:
-
-* `decodeToken`
-* `getTokenExpirationDate`
-* `isTokenExpired`
-
-You can use these methods by passing in the token to be evaluated.
-
-```ts
-// src/app/app.ts
-
-...
-
-jwtHelper: JwtHelper = new JwtHelper();
-
-...
-
-useJwtHelper() {
-  var token = localStorage.getItem('id_token');
-  
-  console.log(
-    this.jwtHelper.decodeToken(token),
-    this.jwtHelper.getTokenExpirationDate(token),
-    this.jwtHelper.isTokenExpired(token)
-  );
-}
-
-...
-```
+There is a simple NodeJS server in the `server` directory. See the readme there for instructions on starting it.
 
 ## What is Auth0?
 
