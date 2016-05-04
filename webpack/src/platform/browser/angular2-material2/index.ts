@@ -5,6 +5,7 @@ import {MD_SIDENAV_DIRECTIVES} from '@angular2-material/sidenav';
 import {MD_INPUT_DIRECTIVES} from '@angular2-material/input';
 import {MD_LIST_DIRECTIVES} from '@angular2-material/list';
 import {MdRadioGroup, MdRadioButton, MdRadioDispatcher} from '@angular2-material/radio';
+import {MdProgressBar} from '@angular2-material/progress-bar';
 import {MdSpinner, MdProgressCircle} from '@angular2-material/progress-circle';
 import {MdToolbar} from '@angular2-material/toolbar';
 
@@ -24,7 +25,9 @@ export const MATERIAL_DIRECTIVES = [
     MdToolbar,
     MdCheckbox,
     MdRadioButton,
+    MdRadioGroup,
     MdSpinner,
+    MdProgressBar,
     MdProgressCircle
   ],
   ...MD_INPUT_DIRECTIVES,
