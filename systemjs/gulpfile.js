@@ -10,12 +10,11 @@ gulp.task('clean', function (done) {
 });
 
 gulp.task('ts2js', function () {
-    var typescript = require('gulp-typescript');
-    var tscConfig = require('./tsconfig.json');
+    var ts = require('gulp-typescript');
+    var tsProject = ts.createProject('./tsconfig.json');
 
-    var tsResult = gulp
-        .src([PATHS.src, 'node_modules/angular2/typings/browser.d.ts'])
-        .pipe(typescript(tscConfig.compilerOptions));
+    var tsResult = tsProject.src()
+              .pipe(ts(tsProject));
 
     return tsResult.js.pipe(gulp.dest('dist'));
 });

@@ -1,52 +1,30 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <base href="/">
-    <meta charset="UTF-8">
-    <title>Angular2 playground</title>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    
-    <!-- Auth0 Lock script -->
-    <script src="//cdn.auth0.com/js/lock-9.0.min.js"></script>
+<html>
+  <head>
+     <base href="/">
+    <title>Angular 2 Playground</title>
+      <meta charset="UTF-8">
+      <!-- Latest compiled and minified CSS -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
-    <!-- Setting the right viewport -->
+     <!-- Auth0 Lock script -->
+     <script src="//cdn.auth0.com/js/lock-9.0.min.js"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-</head>
 
-<body>
+    <script src="node_modules/es6-shim/es6-shim.min.js"></script>
+
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+
+    <script src="systemjs.config.js"></script>
+    <script>
+      System.import('app').catch(function(err){ console.error(err); });
+    </script>
+  </head>
+
+
+  <body>
     <app>Loading...</app>
-</body>
-
-<!-- ES6-related imports -->
-<script src="/node_modules/angular2/bundles/angular2-polyfills.js"></script>
-<script src="/node_modules/es6-shim/es6-shim.min.js"></script>
-<script src="/node_modules/systemjs/dist/system.js"></script>
-<script>
-    //configure system loader
-    System.config({
-        defaultJSExtensions: true,
-        packages: {
-          app: {
-            format: 'register',
-            defaultExtension: 'js'
-          },
-          "angular2-jwt": {
-            defaultExtension: 'js'
-          }          
-        },
-        map: {
-          "angular2-jwt": "node_modules/angular2-jwt/angular2-jwt.js"
-        }
-      });
-</script>
-<script src="/node_modules/rxjs/bundles/Rx.js"></script>
-<script src="/node_modules/angular2/bundles/angular2.js"></script>
-<script src="/node_modules/angular2/bundles/router.js"></script>
-<script src="/node_modules/angular2/bundles/http.js"></script>
-<script>
-    //bootstrap the Angular2 application
-    System.import('dist/app.component').catch(console.log.bind(console));
-</script>
-
+  </body>
 </html>

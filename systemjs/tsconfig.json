@@ -1,15 +1,18 @@
 {
-  "version": "1.6.2",
   "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es5",
-    "module": "system",
-    "moduleResolution": "node",
-    "removeComments": true,
-    "sourceMap": false
+    "removeComments": false,
+    "noImplicitAny": false,
+    "outDir": "./dist"
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "typings/main",
+    "typings/main.d.ts"
   ]
 }

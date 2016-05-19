@@ -1,5 +1,5 @@
-import {Component} from 'angular2/core';
-import {CanActivate} from 'angular2/router';
+import {Component} from '@angular/core';
+import {CanActivate} from '@angular/router-deprecated';
 import {tokenNotExpired} from 'angular2-jwt';
 import {Auth} from './auth.service';
 
@@ -16,6 +16,6 @@ import {Auth} from './auth.service';
 @CanActivate(() => tokenNotExpired())
 
 export class Profile {
-  
+
   constructor(private auth: Auth) {}
 }
