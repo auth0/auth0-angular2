@@ -1,5 +1,5 @@
-import {Injectable, NgZone} from 'angular2/core';
-import {Router} from 'angular2/router';
+import {Injectable, NgZone} from '@angular/core';
+import {Router} from '@angular/router-deprecated';
 import {AuthHttp, tokenNotExpired} from 'angular2-jwt';
 
 // Avoid name not found warnings
@@ -7,7 +7,7 @@ declare var Auth0Lock: any;
 
 @Injectable()
 export class Auth {
-  lock = new Auth0Lock('YOUR_AUTH0_CLIENT_ID', 'YOUR_AUTH0_DOMAIN');
+  lock = new Auth0Lock('YOUR_CLIENT_ID', 'YOUR_DOMAIN');
   refreshSubscription: any;
   user: Object;
   zoneImpl: NgZone;
