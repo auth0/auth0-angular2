@@ -7,7 +7,7 @@ declare var Auth0Lock: any;
 
 @Injectable()
 export class Auth {
-  lock = new Auth0Lock('T6PQG4YrBDMiDbNl1l2BS0AcwRNe2dks', 'chris92.auth0.com');
+  lock = new Auth0Lock('YOUR_CLIENT_ID', 'YOUR_DOMAIN');
   refreshSubscription: any;
   user: Object;
   zoneImpl: NgZone;
