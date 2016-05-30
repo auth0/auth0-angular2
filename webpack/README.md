@@ -12,7 +12,7 @@ npm install
 
 ## Add Your Auth0 Credentials
 
-If you haven't already done so, [sign up](https://auth0.com/signup) for your free Auth0 account. Once you have the client ID and client domain for your app, replace the argumentts in `Auth0Lock` within `auth.service.ts` with them.
+If you haven't already done so, [sign up](https://auth0.com/signup) for your free Auth0 account. Once you have the client ID and client domain for your app, replace the arguments in `Auth0Lock` within `auth.service.ts` with them.
 
 ## Start the App
 
