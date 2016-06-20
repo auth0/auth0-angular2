@@ -17,11 +17,8 @@ import {Auth} from './auth';
   selector: 'app',
   providers: [ Auth ],
   encapsulation: ViewEncapsulation.None,
-  styles: [ 
-    require('normalize.css'), 
-    `md-toolbar button { color: #fff !important }`
-  ],
-  template: require('./app.template.html')
+  template: require('./app.template.html'),
+  styles: [`.btn-margin { margin-top: 5px}`]
 })
 @RouteConfig([
   { path: '/',      name: 'Index', component: Home, useAsDefault: true },

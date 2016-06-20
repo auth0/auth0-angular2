@@ -30,12 +30,8 @@ The best way to have authentication utilities available across the application i
 
 ```ts
 // app/auth/auth.service.ts
-import {Injectable, NgZone} from 'angular2/core';
-import {Router} from 'angular2/router';
-import {AuthHttp, tokenNotExpired} from 'angular2-jwt';
 
-// Avoid name not found warnings
-declare var Auth0Lock: any;
+...
 
 @Injectable()
 export class Auth {
