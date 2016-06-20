@@ -1,5 +1,5 @@
 {
-  "name": "angular2-webpack-starter",
+  "name": "auth0-angular2",
   "version": "0.0.0",
   "description": "Example showing Angular 2 with Auth0 using Angular 2 Webpack Starter",
   "keywords": [
