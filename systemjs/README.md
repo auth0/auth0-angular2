@@ -25,7 +25,7 @@ lock = new Auth0Lock('YOUR_AUTH0_CLIENT_ID', 'YOUR_AUTH0_DOMAIN');
 ## Start the App
 
 ```bash
-gulp play
+npm start
 ```
 
 The app will be served at `localhost:9000`.
