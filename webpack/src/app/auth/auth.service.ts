@@ -1,7 +1,7 @@
 import {Injectable, NgZone} from '@angular/core';
-import {Router} from '@angular/router-deprecated';
+import {Router, CanActivate} from '@angular/router';
 import {AuthHttp, tokenNotExpired} from 'angular2-jwt';
-import {Auth0Vars} from './../../../../auth0vars.ts';
+import {Auth0Vars} from './../../../../auth0vars';
 
 // Avoid name not found warnings
 declare var Auth0Lock: any;
@@ -42,6 +42,20 @@ export class Auth {
     localStorage.removeItem('profile');
     localStorage.removeItem('id_token');
     this.zoneImpl.run(() => this.user = null);
-    this.router.navigate(['Home']);
+    this.router.navigate(['/home']);
+  }
+}
+
+@Injectable()
+export class AuthGuard implements CanActivate {
+  constructor(private router: Router) {}
+
+  canActivate() {
+    if (tokenNotExpired()) {
+      return true;
+    }
+
+    this.router.navigate(['/home']);
+    return false;
   }
 }

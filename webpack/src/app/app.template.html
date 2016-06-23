@@ -2,11 +2,11 @@
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" href="#">Auth0 - Angular 2</a>
-      <button class="btn btn-primary btn-margin" [routerLink]=" ['Home'] ">Home</button>
-      <button class="btn btn-primary btn-margin" [routerLink]=" ['Ping'] ">Ping</button>
-      <button class="btn btn-primary btn-margin" [routerLink]=" ['Profile'] " *ngIf="auth.authenticated()">Profile</button>
-      <button class="btn btn-primary btn-margin" (click)="auth.login()" *ngIf="!auth.authenticated()">Log In</button>
-      <button class="btn btn-primary btn-margin" (click)="auth.logout()" *ngIf="auth.authenticated()">Log Out</button>
+      <a class="btn btn-primary btn-margin" [routerLink]=" ['/home'] ">Home</a>
+      <a class="btn btn-primary btn-margin" [routerLink]=" ['/ping'] ">Ping</a>
+      <a class="btn btn-primary btn-margin" [routerLink]=" ['/profile'] " *ngIf="auth.authenticated()">Profile</a>
+      <a class="btn btn-primary btn-margin" (click)="auth.login()" *ngIf="!auth.authenticated()">Log In</a>
+      <a class="btn btn-primary btn-margin" (click)="auth.logout()" *ngIf="auth.authenticated()">Log Out</a>
     </div>
   </div>
 </nav>

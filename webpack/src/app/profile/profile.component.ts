@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {CanActivate} from '@angular/router-deprecated';
 import {tokenNotExpired} from 'angular2-jwt';
 import {Auth} from '../auth/auth.service';
 
@@ -7,8 +6,6 @@ import {Auth} from '../auth/auth.service';
   selector: 'profile',
   template: require('./profile.template.html')
 })
-
-@CanActivate(() => tokenNotExpired())
 
 export class Profile {
   
