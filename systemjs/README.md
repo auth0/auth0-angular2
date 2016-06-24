@@ -1,11 +1,10 @@
 # Auth0 + Angular 2 with angular2-jwt and SystemJS
 
-This is an example app that shows how to use Auth0 with Angular 2. It uses Auth0's [angular2-jwt](https://github.com/auth0/angular2-jwt) module. The example app is based off of [ng2-play](https://github.com/pkozlowski-opensource/ng2-play) by [Pawel Kozlowski](https://twitter.com/pkozlowski_os).
+This is an example app that shows how to use Auth0 with Angular 2. It uses Auth0's [angular2-jwt](https://github.com/auth0/angular2-jwt) module.
 
 ## Installation
 
 ```bash
-npm install -g gulp
 npm install
 ```
 
@@ -31,29 +30,6 @@ npm start
 The app will be served at `localhost:9000`.
 
 ## Key Parts
-
-### Map to angular2-jwt
-
-```html
-  <!-- index.html -->
-  <script>
-    System.config({
-      defaultJSExtensions: true,
-      packages: {
-        app: {
-          format: 'register',
-          defaultExtension: 'js'
-        },
-        "angular2-jwt": {
-          defaultExtension: 'js'
-        }          
-      },
-      map: {
-        "angular2-jwt": "node_modules/angular2-jwt/angular2-jwt.js"
-      }
-    });
-  </script>
-```
 
 ### Create an Injectable Auth Service
 
