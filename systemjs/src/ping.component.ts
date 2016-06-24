@@ -1,8 +1,8 @@
-import {Component} from '@angular/core';
-import {Http} from '@angular/http';
+import { Component } from '@angular/core';
+import { Http } from '@angular/http';
 
-import {AuthHttp} from 'angular2-jwt';
-import {Auth} from './auth.service';
+import { AuthHttp } from 'angular2-jwt';
+import { Auth } from './auth.service';
 import 'rxjs/add/operator/map';
 
 @Component({

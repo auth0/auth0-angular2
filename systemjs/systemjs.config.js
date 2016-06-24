@@ -1,7 +1,7 @@
 (function(global) {
   // map tells the System loader where to look for things
   var map = {
-    'app':                        'dist', // 'dist',
+    'app':                        'dist/systemjs/src', // 'dist',
     'rxjs':                       'node_modules/rxjs',
     'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
     'angular2-jwt':               'node_modules/angular2-jwt/angular2-jwt.js',
@@ -22,7 +22,6 @@
     '@angular/platform-browser',
     '@angular/platform-browser-dynamic',
     '@angular/router',
-    '@angular/router-deprecated',
     '@angular/testing',
     '@angular/upgrade',
   ];
